@@ -1,0 +1,74 @@
+processors:
+  transform/1:
+    error_mode: ignore
+    trace_statements:
+    # accessing a map with a key that does not exist will return nil. 
+    - set(span.attributes["test"], "pass") where span.attributes["test"] == nil
+  transform:
+#    log_statements:
+#   context: span
+    trace_statements: 
+      - context: span
+        statements:    
+#      - set(resource.attributes["host.name"], "FAILFAIL")gggggggggggggggggggggggggggggggggggg
+#      - set(resource.attributes["service.name"] , "test passed") where resource.spans.attributes["name"] == "MQPUT COLIN"
+#        - set(resource.attributes["service.name"],  "PAYROLL")
+#        - set(resource.attributes["host.name"],span.name)
+#        - set(span.name,"Payroll Put") where span.name == "MQPUT CSERVER"
+#        - set(span.name,"Payroll Get Reply") where span.name == "MQGET REPLY2"
+#        - set(span.name,"CSQ9 Channel MQPA") where service="CSQ9 and span.name == "MQGET SYSTEM.CLUSTER.TRANSMIT.QUEUE"
+#        - set(span.name,"CSQ9 Channel MQPA") where service="CSQ9 and span.attributes["messaging.destination.name"] == "MQGET SYSTEM.CLUSTER.TRANSMIT.QUEUE" 
+        - set(span.name,"CSQ9 SDR Channel MQPA_CSQ9")            where span.name == "MQGET CSQ9"
+        - set(resource.attributes["service.name"],"BACKEND")       where span.name == "MQPUT CSERVER"
+        - set(span.name,"CSQ9 Mover puts message to server queue") where span.name == "MQPUT CSERVER"
+        - set(resource.attributes["service.name"],"BACKEND")       where span.name == "MQGET CSERVER"
+        - set(span.name,"Creditcheck application")            where span.name == "MQGET CSERVER"
+        - set(span.name,"Creditcheck application put reply COLIN")  where span.name == "MQPUT1 COLIN"
+        - set(span.name,"Mover get message") where span.name == "MQGET SYSTEM.CLUSTER.TRANSMIT.QUEUE"
+        - set(span.name,"CSQ9 Channel CSQ9_MQPA from MQPA ") where span.name == "MQGET MQPA"
+        - set(span.name,"Front MQ channel MQPA puts the message") where span.name == "MQPUT COLIN"
+        - set(span.name,"MQ MQPA move puts the reply")  where span.name == "MQPUT COLIN"
+        - set(resource.attributes["service.name"],  "PAYROLL") where span.name == "MQGET COLIN"
+        - set(span.name,"Payroll MQPA app gets the reply") where span.name == "MQGET COLIN"
+        -  delete_key(span.attributes,  "messaging.destination.type")
+        -  delete_key(span.attributes,  "messaging.ibmmq.application.completion_code")
+        -  delete_key(span.attributes,  "messaging.ibmmq.application.external_transaction_id")
+ #       -  delete_key(span.attributes,  "messaging.ibmmq.application.name")
+        -  delete_key(span.attributes,  "messaging.ibmmq.application.pid")
+        -  delete_key(span.attributes,  "messaging.ibmmq.application.qmgr_transaction_id")
+        -  delete_key(span.attributes,  "messaging.ibmmq.application.reason_code")
+        -  delete_key(span.attributes,  "messaging.ibmmq.application.transaction_type")
+        -  delete_key(span.attributes,  "messaging.ibmmq.application.type")
+        -  delete_key(span.attributes,  "messaging.ibmmq.application.user_id")
+        -  delete_key(span.attributes,  "messaging.ibmmq.consumer.original_wait_interval")
+        -  delete_key(span.attributes,  "messaging.ibmmq.consumer.used_wait_interval")
+        -  delete_key(span.attributes,  "messaging.ibmmq.destination.resolved_name")
+        -  delete_key(span.attributes,  "messaging.ibmmq.destination.resolved_qmgr_name")
+        -  delete_key(span.attributes,  "messaging.ibmmq.message.accounting_token")
+        -  delete_key(span.attributes,  "messaging.ibmmq.message.appl_identity_data")
+        -  delete_key(span.attributes,  "messaging.ibmmq.message.appl_origin_data")
+        -  delete_key(span.attributes,  "messaging.ibmmq.message.delivery_count")
+        -  delete_key(span.attributes,  "messaging.ibmmq.message.expiry")
+        -  delete_key(span.attributes,  "messaging.ibmmq.message.feedback")
+        -  delete_key(span.attributes,  "messaging.ibmmq.message.persistent")
+        -  delete_key(span.attributes,  "messaging.ibmmq.message.priority")
+ #       -  delete_key(span.attributes,  "messaging.ibmmq.message.put_appl_name")
+        -  delete_key(span.attributes,  "messaging.ibmmq.message.put_appl_type")
+        -  delete_key(span.attributes,  "messaging.ibmmq.message.put_date")
+        -  delete_key(span.attributes,  "messaging.ibmmq.message.put_time")
+        -  delete_key(span.attributes,  "messaging.ibmmq.message.reply_destination_name")
+        -  delete_key(span.attributes,  "messaging.ibmmq.message.reply_qmgr_name")
+        -  delete_key(span.attributes,  "messaging.ibmmq.message.report")
+#        -  delete_key(span.attributes,  "messaging.ibmmq.message.time_on_queue")
+        -  delete_key(span.attributes,  "messaging.ibmmq.message.type")
+        -  delete_key(span.attributes,  "messaging.ibmmq.message.user_id")
+        -  delete_key(span.attributes,  "messaging.message.body.size")
+        -  delete_key(span.attributes,  "messaging.message.conversation.id")
+        -  delete_key(span.attributes,  "messaging.message.envelope.size")
+        -  delete_key(span.attributes,  "messaging.message.id")
+        -  delete_key(span.attributes,  "messaging.system")
+#      - set(resource.attributes["service.name"], Concat([resource.attributes["service.name"], scopeSpans.spans["name"] ], " - "))
+#        - set(attributes["http.summary"],          Concat([attributes["http.method"], attributes["http.method"]], " - "))  
+#         - keep_keys(span.attributes, ["service.name", "service.namespace", "cloud.region", "process.command_line"])
+#	  - truncate_all(span.attributes, 4096)
+

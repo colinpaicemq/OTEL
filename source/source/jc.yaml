@@ -1,0 +1,112 @@
+# Copyright (c) 2026 The Jaeger Authors.
+# SPDX-License-Identifier: Apache-2.0
+
+service:
+  extensions: [jaeger_storage, jaeger_query]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [jaeger_storage_exporter, span_metrics] #,span_metrics/2
+    metrics/span_metrics:
+      receivers: [span_metrics]
+      processors: [batch]
+      exporters: [prometheus,debug]  # debug
+#    metrics/span_metrics2:
+#      receivers: [span_metrics/2]
+#      processors: [batch]
+#      exporters: [debug]  
+  telemetry:
+    resource:
+      service.name: jaeger
+    metrics:
+      level: detailed
+      readers:
+        - pull:
+            exporter:
+              prometheus:
+                host: 0.0.0.0
+                port: 8888
+    logs:
+      level: DEBUG
+
+extensions:
+  jaeger_query:
+    storage:
+      traces: some_storage
+      metrics: some_metrics_storage
+  jaeger_storage:
+    backends:
+      some_storage:
+        memory:
+          max_traces: 100000
+    metric_backends:
+      some_metrics_storage:
+        prometheus:
+          endpoint: http://0.0.0.0:9090
+          normalize_calls: true
+          normalize_duration: true
+
+connectors:
+#  span_metrics/2:
+#    resource_metrics_key_attributes:
+#      - service.name
+#      - telemetry.sdk.language
+#      - telemetry.sdk.name
+  span_metrics:
+    histogram:
+      dimensions:
+        - name: url.scheme
+          default: https
+        - name: span.name   
+      explicit:
+        buckets: [100us, 1ms, 2ms, 6ms, 10ms, 100ms, 250ms]  
+    dimensions:
+      - name: http.method
+        default: GET
+      - name: http.status_code
+      - name: span.messaging.ibmmq.message.put_appl_name
+        default: NONAME 
+    calls_dimensions:
+      - name: http.url
+        default: /ping
+    exemplars:
+      enabled: true
+    exclude_dimensions: ['status.code']
+    aggregation_temporality: "AGGREGATION_TEMPORALITY_CUMULATIVE"
+    metrics_flush_interval: 15s
+    metrics_expiration: 5m
+    series_expiration: 5m
+    events:
+      enabled: true
+      dimensions:
+        - name: exception.type
+        - name: exception.message
+    resource_metrics_key_attributes:
+      - service.name
+      - telemetry.sdk.language
+      - telemetry.sdk.namegg
+    include_instrumentation_scope:
+      - express
+
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: "0.0.0.0:4317"
+      http:
+        endpoint: "0.0.0.0:4318"
+
+processors:
+  batch:
+
+exporters:
+  jaeger_storage_exporter:
+    trace_storage: some_storage
+  prometheus:
+    endpoint: "0.0.0.0:8889"
+    send_timestamps: true
+    metric_expiration: 5m
+  debug:
+    verbosity: detailed # Options: basic, normal, detailed  

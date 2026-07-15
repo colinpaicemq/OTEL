@@ -1,0 +1,112 @@
+[
+  "1783838225655904468",
+  "abcd6a5336110006e3ddf00000000000",
+  "e2f747c838860780",
+  "e2f747c837d3bcc0",
+  "Server Get Message",
+  [
+    {
+      "traceId": "abcd6a5336110006e3ddf00000000000",
+      "spanId": "e2f747c837d3bcc0",
+      "flags": 257
+    }
+  ]
+]
+[
+  "1783838225660206421",
+  "abcd6a5336110006e3ddf00000000000",
+  "e2f747c83992e6c0",
+  "aabbccddeeff0011",
+  "MQPUT1 REPLY2",
+  [
+    {
+      "traceId": "abcd6a5336110006e3ddf00000000000",
+      "spanId": "aabbccddeeff0011",
+      "flags": 257
+    }
+  ]
+]
+[
+  "1783838225439210218",
+  "abcd6a5336110002ada2f00000000000",
+  "e2f747c8039ea380",
+  "aabbccddeeff0011",
+  "MQPUT1 REPLY2",
+  [
+    {
+      "traceId": "abcd6a5336110002ada2f00000000000",
+      "spanId": "aabbccddeeff0011",
+      "flags": 257
+    }
+  ]
+]
+[
+  "1783838225442673453",
+  "abcd6a5336110002ada2f00000000000",
+  "e2f747c804771740",
+  "e2f747c8039ea380",
+  "Payroll Get Reply",
+  [
+    {
+      "traceId": "abcd6a5336110002ada2f00000000000",
+      "spanId": "e2f747c8039ea380",
+      "flags": 257
+    }
+  ]
+]
+[
+  "1783838225662886093",
+  "abcd6a5336110006e3ddf00000000000",
+  "e2f747c83a3a6180",
+  "e2f747c83992e6c0",
+  "Payroll Get Reply",
+  [
+    {
+      "traceId": "abcd6a5336110006e3ddf00000000000",
+      "spanId": "e2f747c83992e6c0",
+      "flags": 257
+    }
+  ]
+]
+[
+  "1783838225378421750",
+  "abcd6a5336110002ada2f00000000000",
+  "e2f747c7f4c75c00",
+  "abcdef0123456789",
+  "Payroll Put",
+  [
+    {
+      "traceId": "abcd6a5336110002ada2f00000000000",
+      "spanId": "abcdef0123456789",
+      "flags": 257
+    }
+  ]
+]
+[
+  "1783838225426317046",
+  "abcd6a5336110002ada2f00000000000",
+  "e2f747c80078d0c0",
+  "e2f747c7f4c75c00",
+  "Server Get Message",
+  [
+    {
+      "traceId": "abcd6a5336110002ada2f00000000000",
+      "spanId": "e2f747c7f4c75c00",
+      "flags": 257
+    }
+  ]
+]
+[
+  "1783838225653051796",
+  "abcd6a5336110006e3ddf00000000000",
+  "e2f747c837d3bcc0",
+  "abcdef0123456789",
+  "Payroll Put",
+  [
+    {
+      "traceId": "abcd6a5336110006e3ddf00000000000",
+      "spanId": "abcdef0123456789",
+      "flags": 257
+    }
+  ]
+]
